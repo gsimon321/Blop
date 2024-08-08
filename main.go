@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 )
 
@@ -22,7 +23,9 @@ func main() {
 	}
 }
 
+// This is what we would be responsible for writing to a file
 func SaveData1(path string, data []byte) error {
+	//cool part about go is that you can have multiple return types here specifically an error and a file
 	fp, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return err
@@ -33,6 +36,12 @@ func SaveData1(path string, data []byte) error {
 		return err
 	}
 	return fp.Sync()
+}
+
+func SaveData2(path string, data []byte) error {
+	tmp := fmt.Sprintf("%s.tmp.%d", path, rand.Int())
+	fp, err := os.OpenFile(tmp, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0644)
+
 }
 
 //TIP See GoLand help at <a href="https://www.jetbrains.com/help/go/">jetbrains.com/help/go/</a>.
